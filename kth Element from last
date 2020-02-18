@@ -1,0 +1,63 @@
+#include<iostream>
+using namespace std;
+
+struct node{
+ int data;
+ node* next;
+
+  node(int data){
+      this->data = data;
+      next = NULL;
+  }
+};
+
+node* createLL(node* head){
+int data;
+cin>>data;
+
+   if(data!=-1){
+      head = new node(data);
+   }else{
+       return NULL;
+   } 
+node* tail = head;  // tail for movement
+cin>>data;
+  while(data!=-1){
+     // firstly create node for next valid (non -1) data
+    node* temp = new node(data);
+    tail->next = temp;
+    tail = temp;
+  cin>>data;    
+  }
+ return head;   
+}
+
+node* find_position(node* head,int k){
+   while(k>0){
+    head = head->next;
+ k--;
+   }
+ return head;
+}
+
+int kthElementFromLast(node* head,int k){
+node* it = head;
+node* it1 = head;
+ it1 = find_position(head,k);  
+
+   while(it1!=NULL){
+     it = it->next; 
+  it1 = it1->next;
+   }
+ return it->data;
+}
+
+int main(){
+node *head = NULL;
+head = createLL(head);
+int k;
+cin>>k;
+
+ cout<< kthElementFromLast(head,k) <<endl;
+  return 0;  
+}
