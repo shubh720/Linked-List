@@ -1,0 +1,47 @@
+#include<iostream>
+using namespace std;
+
+struct node{
+ int data;
+ node* next;
+
+  node(int data){
+      this->data = data;
+      next = NULL;
+  }
+};
+
+node* createLL(node* head,int n){
+int data;
+node* tail = NULL; 
+  while(n>0){
+   cin>>data;
+    node* temp = new node(data);
+     if(head == NULL){
+         head = temp;
+         tail = head; // tail == head
+     }
+    tail->next = temp;
+    tail = temp;   // tail == last node
+ n--;     
+  }
+ return head;  
+}
+
+void print(node* head){
+    while(head!=NULL){
+        cout<<head->data<<"-->";
+   head = head->next;     
+    }
+   cout<<"NULL"<<endl; 
+}
+
+int main(){
+node *head = NULL;
+int n;
+cin>>n;
+head = createLL(head,n);
+print(head);
+
+  return 0;  
+}
