@@ -1,0 +1,102 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long
+#define MAX 1000000
+ll n;
+int cnt = 0;
+
+struct node{
+ int data;
+ node* next;
+
+    node(int data){
+        this->data = data;
+        next = NULL;
+    }
+};
+
+
+node* createLL(node* head){
+ int data;
+
+    if(n > 0){
+        cin >> data;
+        head = new node(data);
+    }else return NULL;
+
+ node* tail = head;
+    while(n-- > 1){
+        cin >> data;
+        node* temp = new node(data);
+        tail -> next = temp;
+     tail = tail -> next;
+    }
+ return head;
+}
+
+void print(node* head){
+
+  while(head!=NULL){
+      cout<< head->data <<"-->";
+    head = head -> next;
+  }
+ return;
+}
+
+node* find_at_k(node* head,int cnt){
+ int i = cnt - 1;
+ node* tail = head;
+  while(i > 0){
+     tail = tail -> next;
+     i--;
+  }
+ return tail;
+}
+
+node* deletefromLL(node* head,int *freq){
+
+ node* tail = head;
+    while(tail!=NULL){
+      int t = tail->data;
+
+      if(freq[t] == 0){
+         cnt++;
+         freq[t] = 1;
+      }else{
+         node* p = find_at_k(head,cnt); // curr postn -1
+         node *temp = tail;  // curr postn
+
+       if(tail->next != NULL){
+          p -> next = temp -> next;
+          delete temp;
+
+       }else{
+         p -> next = NULL;
+         delete temp;
+       }
+      }
+  tail = tail -> next;
+    }
+ return head;
+}
+
+int main(){
+
+int t;
+cin >> t;
+    while(t--){
+      cin >> n;
+      int freq[MAX] = {0};
+
+      node* head = NULL;
+      head = createLL(head);
+      //print(head);
+      head = deletefromLL(head,freq);
+      print(head);
+      cnt = 0;
+    }
+
+
+
+   return 0;
+}
