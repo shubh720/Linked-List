@@ -1,0 +1,84 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node{
+ int data;
+ node* next;
+
+    node(int data){
+        this->data = data;
+        next = NULL;
+    }
+};
+
+node* createLL(node* head,int n){
+ int data;
+
+    if(n > 0){
+        cin >> data;
+        head = new node(data);
+    }else return NULL;
+
+ node* tail = head;
+    while(n-- > 1){
+        cin >> data;
+        node* temp = new node(data);
+        tail -> next = temp;
+     tail = tail -> next;
+    }
+ return head;
+}
+
+node* findposition(node* head,int n){
+
+ while(--n > 0) head = head -> next;
+
+  return head;
+}
+
+
+node* append(node* head,int n,int k){
+
+node* breakList;
+
+if(n-k != 0) k = k % n;
+else return head;
+breakList = findposition(head,n-k);
+node* it2 = findposition(head,n);
+
+node* temp = breakList -> next;
+breakList -> next = NULL;
+it2 -> next = head;
+head = temp;
+
+return head;
+}
+
+
+void print(node* head){
+  while(head != NULL){
+      cout<< head->data <<" ";
+      head = head -> next;
+  }
+ cout << endl;
+ return;
+}
+
+int main(){
+
+node* head = NULL;
+
+int n,k;
+cin >> n;
+
+head = createLL(head,n);
+
+cin >> k;
+head = append(head,n,k);
+print(head);
+//cout << findposition(head,k) -> data;
+
+ return 0;
+}
+
+
