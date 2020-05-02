@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node{
+ int data;
+ node* next;
+
+    node(int data){
+        this->data = data;
+        next = NULL;
+    }
+};
+
+
+node* createLL(node* head,int n){
+ int data;
+
+    if(n > 0){
+        cin >> data;
+        head = new node(data);
+    }else return NULL;
+
+ node* tail = head;
+    while(n-- > 1){
+        cin >> data;
+        node* temp = new node(data);
+        tail -> next = temp;
+     tail = tail -> next;
+    }
+ return head;
+}
+
+node* findPostition(node* head,int it){
+
+   while(--it > 0)  head = head -> next;
+ return head;
+}
+
+bool palindrome(node* head,int n){
+
+node* it1 = head; // 1st node
+int move = n;     // cpy length
+node* it2 = head;
+    while(--move > 0) it2 = it2 -> next;  // last pointing
+
+int i = 0 , j = n;
+ while(i++ < j--){
+      int s = it1->data;
+      int e = it2->data;
+
+      if(s != e) return false;
+
+      it1 = it1->next;
+      it2 = findPostition(head,n-1);
+      n--;
+
+  }
+
+
+  return true;
+}
+
+
+int main(){
+
+int n;
+cin >> n;
+node* head = NULL;
+head = createLL(head,n);
+bool ans = palindrome(head,n);
+
+    if(ans == 0) cout<<"false"<<endl;
+    else cout<<"true"<<endl;
+
+ return 0;
+}
