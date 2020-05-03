@@ -1,0 +1,114 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node{
+ int data;
+ node* next;
+
+    node(int data){
+        this->data = data;
+        next = NULL;
+    }
+};
+
+node* createLL(node* head,int n){
+ int data;
+
+    if(n > 0){
+        cin >> data;
+        head = new node(data);
+    }else return NULL;
+
+ node* tail = head;
+    while(n-- > 1){
+        cin >> data;
+        node* temp = new node(data);
+        tail -> next = temp;
+     tail = tail -> next;
+    }
+ return head;
+}
+
+
+node* oddEven(node* head){
+
+node* tail = head;  // will iterate
+node* odd = NULL;
+node* even = NULL;
+node* odd_it = NULL;
+node* even_it = NULL;
+
+
+  while(tail != NULL){
+    int val = tail -> data;
+    node* temp = new node(val);
+
+    if(odd == NULL && val%2 != 0){
+
+          temp -> next = odd;
+          odd = temp;
+          odd_it = odd;
+     }else if(even == NULL && val%2 == 0){
+          temp -> next = even;
+          even = temp;
+          even_it = even;
+
+    }else{
+
+      if(val % 2 != 0){
+         odd_it -> next = temp;
+         odd_it = temp;
+      }else{
+         even_it -> next = temp;
+         even_it = temp;
+      }
+
+
+    }
+
+  tail = tail -> next;
+  }
+
+node *newhead = NULL;
+
+// created 2 list even and odd now joining
+if(odd == NULL){
+// odd not created only
+ newhead = even;
+}else if(even == NULL){
+
+ newhead = odd;
+}else if(odd != NULL && even != NULL){
+ newhead = odd;
+ odd_it -> next = even;
+}
+
+  return newhead;
+}
+
+
+void print(node* head){
+  while(head != NULL){
+      cout<< head->data <<" ";
+      head = head -> next;
+  }
+ cout << endl;
+ return;
+}
+
+int main(){
+
+node* head = NULL;
+
+int n;
+cin >> n;
+
+head = createLL(head,n);
+head = oddEven(head);
+print(head);
+
+ return 0;
+}
+
+
+
